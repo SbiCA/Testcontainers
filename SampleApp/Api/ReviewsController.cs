@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -10,8 +9,8 @@ namespace SampleApp.Api
     [Route("api/[controller]")]
     public class ReviewsController : Controller
     {
-        private readonly ReviewRepository _repository;
         private readonly IHubContext<ReviewHub, IReviewSubscriptions> _hubContext;
+        private readonly ReviewRepository _repository;
 
         public ReviewsController(ReviewRepository repository, IHubContext<ReviewHub, IReviewSubscriptions> hubContext)
         {
@@ -26,20 +25,11 @@ namespace SampleApp.Api
             await _hubContext.Clients.Group(movie).NewRatingArrived(command);
             return Ok();
         }
-        
+
         [HttpGet("{movie}/ratings")]
         public IActionResult Get([FromRoute] string movie)
         {
             return Ok(_repository.GetRatings(movie));
         }
-    }
-
-    public class AddRating
-    {
-        [Required] 
-        public string User { get; set; }
-
-        [Required, Range(1, 5)]
-        public int Stars { get; set; }
     }
 }

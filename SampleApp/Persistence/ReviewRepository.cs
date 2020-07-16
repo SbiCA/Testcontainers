@@ -17,13 +17,11 @@ namespace SampleApp.Persistence
         {
             using var session = _documentStore.LightweightSession();
             if (session.Load<Review>(movie) == null)
-            {
                 // init document if non existent ... can of course be solved differently 
                 session.Store(new Review
                 {
                     Movie = movie
                 });
-            }
 
             // Patch is using plv8 features to use a javascript function.
             session

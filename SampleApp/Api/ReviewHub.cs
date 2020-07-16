@@ -32,9 +32,4 @@ namespace SampleApp.Api
             return base.OnDisconnectedAsync(exception);
         }
     }
-
-    public interface IReviewSubscriptions
-    {
-        Task NewRatingArrived(AddRating rating);
-    }
 }
